@@ -1,0 +1,87 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{graphicx}
+
+\title{Auditoria Técnica do Sistema \textit{tarefas2}}
+\author{Relatório Gerado automaticamente}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Visão Geral}
+O sistema \textit{tarefas2} é um gerenciador de tarefas acadêmicas desenvolvido em C utilizando CGI. A arquitetura é modular, focada em usuários com diferentes papéis (aluno, professor e administrador). O sistema também utiliza bibliotecas próprias para banco de dados, manipulação de arquivos e sessões.
+
+\section{Arquitetura do Sistema}
+A estrutura possui módulos separados por função:
+\begin{itemize}
+    \item Autenticação e sessão
+    \item Papéis de usuário (aluno, professor, administrador)
+    \item Configuração e correção de tarefas
+    \item Banco interno de dados
+\end{itemize}
+
+\subsection{Fluxo de Acesso}
+\begin{verbatim}
+Usuário acessa /tarefas.cgi
+   ├─ Verifica sessão
+   ├─ Se não logado: redireciona para login
+   └─ Se logado: identifica papel do usuário
+        ├─ aluno → /html/papeis/aluno/
+        ├─ professor → /html/papeis/professor/
+        └─ admin → /html/papeis/adm/
+\end{verbatim}
+
+\section{Bibliotecas Detectadas}
+\begin{longtable}{|l|p{9cm}|}
+\hline
+\textbf{Biblioteca} & \textbf{Função} \\
+\hline
+bib/cgi/login & Sistema de login e autenticação \\ \hline
+bib/cgi/papeis & Define o papel do usuário \\ \hline
+bib/bd/tarefasbd.h & Banco de dados de tarefas \\ \hline
+bib/imagem.h & Upload/exibição de imagens \\ \hline
+bib/diretorio.h & Manipulação de arquivos no servidor \\ \hline
+bib/str/* & Tratamento de strings e HTML \\ \hline
+\end{longtable}
+
+\section{Auditoria Técnica}
+Foram analisados pontos críticos:
+
+\subsection{Pontos Fortes}
+\begin{itemize}
+    \item Estrutura modular
+    \item Independência de banco externo
+    \item Separação clara de papéis
+    \item Compatível com ambientes de ensino
+\end{itemize}
+
+\subsection{Riscos e Fragilidades}
+\begin{itemize}
+    \item Segurança de login e sessões deve ser revisada
+    \item Possível vulnerabilidade em \textit{upload} de arquivos
+    \item Ausência de logs e tratamento de erro padronizado
+    \item Falta de documentação por módulo
+    \item Dependência de CGI pode ser um gargalo de performance
+\end{itemize}
+
+\section{Recomendações Técnicas}
+\begin{longtable}{|p{7cm}|p{7cm}|}
+\hline
+\textbf{Recomendação} & \textbf{Benefício} \\ \hline
+Migrar para FastCGI ou PHP & Aumento de performance \\ \hline
+Utilizar SQLite ou MySQL & Escalabilidade \\ \hline
+Criar API REST em C ou Python & Integração com frontend moderno \\ \hline
+Desenvolver UI em Vue ou React & Melhor experiência de usuário \\ \hline
+Criar sistema de logs e erros & Melhor depuração \\ \hline
+\end{longtable}
+
+\section{Conclusão}
+O sistema tem potencial acadêmico e pode ser transformado em uma plataforma moderna com poucas adaptações estruturais. Há pontos fortes na modularidade, mas melhorias são necessárias para produção e segurança.
+
+\end{document}
