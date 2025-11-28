@@ -1,35 +1,96 @@
-# Projeto organizado
+# 📝 Tarefas2 — Sistema de Gerenciamento de Tarefas
 
-Este repositório foi organizado automaticamente para compartilhamento no GitHub.
+Um sistema simples e eficiente para gerenciamento de tarefas, desenvolvido para ser executado em um servidor web Linux ou via Docker. Ideal para estudos, deploy rápido e demonstrações.
 
-Estrutura sugerida:
+---
+
+## 📁 Estrutura do Projeto
+
+
+---
+
+## 🚀 Formas de Instalação
+
+### ✔️ 1. Instalação Automática no Linux
+
+
+Ao final, o sistema estará disponível em:
+
+👉 http://localhost/tarefas2
+
+---
+
+### 🐳 2. Instalação via Docker (RECOMENDADA)
+
+
+---
+
+### 🔧 3. Instalação Manual (Opcional)
+
+```bash
+sudo apt update
+sudo apt install apache2 php libapache2-mod-php unzip -y
+
+sudo cp -r public/ /var/www/html/tarefas2/
+sudo cp tarefas2.conf /etc/apache2/sites-available/
+
+sudo a2ensite tarefas2.conf
+sudo systemctl restart apache2
 ```
-/ (raiz do repositório)
-├─ src/        # Código-fonte (.py, notebooks)
-├─ docs/       # Documentação (.md)
-├─ tests/      # Testes automatizados
-├─ assets/     # Imagens e recursos estáticos
-├─ data/       # (se existir) arquivos de dados
-├─ README.md
-├─ LICENSE
-└─ .gitignore
+
+---
+
+## ⚙️ Arquivo de Configuração (tarefas2.conf)
+
+Exemplo para Apache:
+
+```apache
+<VirtualHost *:80>
+   ServerName localhost
+   DocumentRoot /var/www/html/tarefas2/public
+
+   <Directory /var/www/html/tarefas2/public>
+      AllowOverride All
+      Require all granted
+   </Directory>
+</VirtualHost>
 ```
 
-Como usar:
-1. Baixe o ZIP e extraia.
-2. Entre na pasta do projeto e inicialize um repositório git:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial organized import"
-   ```
-3. Crie um repositório no GitHub e conecte-o:
-   ```bash
-   git remote add origin https://github.com/SEU_USUARIO/SEU_REPO.git
-   git branch -M main
-   git push -u origin main
-   ```
+---
 
-Observações:
-- Arquivos foram movidos automaticamente para pastas comuns quando aplicável.
-- Revise os arquivos, renomeie e ajuste a estrutura conforme necessário.
+## 🐳 Docker — Arquivo docker-compose.yml
+
+```yaml
+version: "3.9"
+services:
+  tarefas2:
+    build: .
+    container_name: tarefas2_app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./public:/var/www/html/tarefas2
+    restart: always
+```
+
+---
+
+## 🧪 Testes Rápidos
+
+
+---
+
+## 📄 Licença
+
+Este projeto é livre para uso acadêmico e estudos.  
+Você pode modificar e redistribuir, desde que mantenha os créditos originais.
+
+---
+
+## 🤝 Contribuição
+
+
+---
+
+## 📬 Contato
+
