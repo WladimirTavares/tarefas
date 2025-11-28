@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+			textarea.campoSalvar  {
+
+				min-width: 300pt;
+			}
+
+		</style>
+		<script>
+			function cbEditarClick() {
+				var cb = document.getElementById("cbEditar");
+
+				var inPosicao = document.getElementById("posicao")
+				var inTitulo = document.getElementById("titulo");
+				var inEnunciado = document.getElementById("enunciado");
+				var inDescricao = document.getElementById("descricao")
+				var taObs = document.getElementById("obs");
+				//var cbExcluirOrfa = document.getElementById("excluirorfa");
+				//var cbExcluirRespostas = document.getElementById("excluirrespostas");
+
+				var btAtualizar = document.getElementById("atualizar");
+
+				if (cb.checked) {
+					inPosicao.disabled = false;
+					inTitulo.readOnly = false;
+					inEnunciado.disabled = false;
+					inDescricao.readOnly = false;
+					taObs.readOnly = false;
+					//cbExcluirOrfa.disabled = false;
+					//cbExcluirRespostas.disabled = false;
+
+					btAtualizar.disabled = false;
+				}
+				else {
+					inPosicao.disabled = true;
+					inTitulo.readOnly = true;
+					inEnunciado.disabled = true;
+					inDescricao.readOnly = true;
+					taObs.readOnly = true;
+					//cbExcluirOrfa.disabled = true;
+					//cbExcluirRespostas.disabled = true;
+
+					btAtualizar.disabled = true;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de Professor: Minhas Turmas: Turma $TURMA$</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div>
+
+
+			<p>Trabalho: $INFOTRABALHO$</p>
+
+			<form method="post">
+
+				<button type="submit" name="acao" class="botaoLink" formaction="" value="paginaentregas">Entregas</button>
+				<input type="hidden" name="idItemTarefa" value="$IDITEMTAREFA$">
+				<input type="hidden" name="idTarefa" value="$IDTAREFA$">
+				<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+
+			</form>
+			<br>
+			
+
+			<img src="$ENUNCIADOTAREFA$" height="$ALTURAENUN$"/>
+
+			<br>
+			<hr>
+			<br>
+
+			<form method="post" enctype="multipart/form-data">
+
+				<p>Dados da Tarefa</p>
+
+
+				<table class="camposSalvar">
+					<tr>
+						<td class="nomeCampoSalvar">Id da Tarefa:</td> <td class="campoSalvar">$IDTAREFA$</td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Posição no Trabalho:</td> <td class="campoSalvar"><input type="number" class="campoSalvar" name="posicao" id="posicao" min="1" max="$MAXPOSIT$" value="$POSICAO$" disabled></td> <td class="espacoDir"><input type="checkbox" name="cbEditar" id="cbEditar" onclick="cbEditarClick()" $EDITAR$><label for="cbEditar">editar</label></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Título:</td> <td class="campoSalvar"><input type="text" class="campoSalvar" name="titulo" id="titulo" value="$TITULO$" readonly></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Enunciado (.pdf):</td> <td class="campoSalvar">
+						<input type="file" id="enunciado" name="enunciado" disabled></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Descricao:</td> <td class="campoSalvar"><input type="text" class="campoSalvar" name="descricao" id="descricao" value="$DESCRICAO$" readonly></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Observações:</td> <td class="campoSalvar"><textarea class="campoSalvar" maxlength="20000" rows="3" name="obs" id="obs" readonly>$OBS$</textarea></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="espacoVertical"> </td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar"></td>
+						<td class="campoSalvar">
+							<button type="submit" name="acao" formaction="" value="editaritemtarefa" id="atualizar" disabled>atualizar tarefa</button>
+						</td>
+						<td class="espacoDir">
+							<button type="submit" name="acao" id="remover" formaction="" value="removeritemtarefa"onclick="return confirm('Tem certeza que quer remover este item de tarefa?\n Essa ação é irreversível.')">remover tarefa do trabalho</button> &nbsp;&nbsp; <input type="checkbox" name="excluirorfa" id="excluirorfa" $EXCLUIRORFA$><label for="excluirorfa">excluir tarefa órfã</label> &nbsp;&nbsp; <input type="checkbox" name="excluirrespostas" id="excluirrespostas" $EXCLUIRRESPOSTAS$><label for="excluirrespostas">excluir respostas enviadas</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="espacoVertical"> </td>
+					</tr>
+					<tr>
+						<td class="campoSalvar"></td>
+						<td class="campoSalvar">
+							<button type="submit" name="acao" formaction="" value="configuraravaliacaocodigocstdin">configurar avaliação</button>
+						</td>
+						<td class="campoSalvar"></td>
+					</tr>
+				</table>
+
+				<input type="hidden" name="tipoTarefa" id="tipoTarefa" value="$TIPOTAREFA$">
+				<input type="hidden" name="idItemTarefa" value="$IDITEMTAREFA$">
+				<input type="hidden" name="idTarefa" value="$IDTAREFA$">
+				<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+
+			</form>
+
+		</div>
+
+		<hr>
+
+		<div>
+			<form method="post">
+				<button type="submit" name="acao" formaction="" value="voltarpaginaitemtarefa">voltar</button>
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+			</form>
+		</div>
+
+	</body>
+	<script>
+		cbEditarClick();
+	</script>
+
+</html>

@@ -1,0 +1,25 @@
+- Interação com o sistema
+
+A interação com o sistema se dá pela provocação do sistema a fazer alguma coisa, o que chamaremos de ação.
+
+Dessa forma, ao ser identificada uma ação que se deseja implementar, algumas coisas devem ser providenciadas:
+
+    - nome da ação
+    - método da ação: método a ser executado quando do disparo da ação pelo usuário
+    - método da tela: método para a geração da tela de resposta após a execução da ação
+
+Normalmente a tela é onde as ações podem se solicitadas pelo usuário.
+
+O método da ação deve fazer o seguinte:
+
+    - decidir se e como a ação deve ser executada
+    - resgatar os campos dos formulários
+    - checar a validade dos valores dos campos dos formulários
+    - realizar a ação
+    - direcionar para o método de tela adequada ao resultado da ação, provendo para o método de tela todas as informações necessárias do banco de dados, de forma a evitar que o método de página tenha que acessar o banco de dados
+
+O método de tela deve:
+
+    - resgatar os campos dos formulários
+    - montar a página de tela de acordo com os parâmetros
+

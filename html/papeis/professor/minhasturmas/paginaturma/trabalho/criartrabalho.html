@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de Professor: Minhas Turmas: Turma $TURMA$</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div>
+
+			<form method="post">
+
+				<p>Dados do Trabalho</p>
+
+				<table class="camposSalvar">
+					<tr>
+						<td class="nomeCampoSalvar">Título:</td> <td class="campoSalvar"><input type="text" class="campoSalvar" name="titulo" value="$TITULO$"></td> <td class="espacoDir"></td>
+					</tr>
+					<!--<tr>
+						<td class="nomeCampoSalvar">Posição:</td> <td class="campoSalvar"><input type="number" min="1" class="campoSalvar" name="posicao" value="$POSICAO$"></td> <td class="espacoDir"></td>
+					</tr>-->
+					<tr>
+						<td class="nomeCampoSalvar">Data Início:</td> <td class="campoSalvar"><input type="date" class="campoSalvar" name="dataini" min="2023-01-01" value="$DATAINI$"></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Hora Início:</td> <td class="campoSalvar"><input type="time" class="campoSalvar" name="horaini" value="$HORAINI$"></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Data Fim:</td> <td class="campoSalvar"><input type="date" class="campoSalvar" name="datafim" min="2023-01-01" value="$DATAFIM$"></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Hora Fim:</td> <td class="campoSalvar"><input type="time" class="campoSalvar" name="horafim" value="$HORAINI$"></td> <td class="espacoDir"></td>
+					</tr>
+					<!-- <tr>
+						<td class="nomeCampoSalvar">Nome:</td> <td class="campoSalvar">$NOME$</td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">E-mail:</td> <td class="campoSalvar">$EMAIL$</td> <td class="espacoDir"></td>
+					</tr> -->
+					<tr>
+						<td class="nomeCampoSalvar">Descrição:</td> <td class="campoSalvar"><textarea class="campoSalvar" maxlength="200" rows="3" name="descricao">$DESCRICAO$</textarea></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar"></td> <td class="campoSalvar"><input type="checkbox" name="oculto" id="oculto" $OCULTO$><label for="oculto">Oculto</label></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar">Observações:</td> <td class="campoSalvar"><textarea class="campoSalvar" maxlength="200" rows="3" name="obs">$OBS$</textarea></td> <td class="espacoDir"></td>
+					</tr>
+					<tr>
+						<td class="espacoVertical"> </td>
+					</tr>
+					<tr>
+						<td class="nomeCampoSalvar"></td> <td class="campoSalvar"><button type="submit" name="acao" formaction="" value="salvartrabalho">salvar</button></td> <td class="espacoDir"></td>
+					</tr>
+				</table>
+
+				<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+
+			</form>
+
+		</div>
+
+		<hr>
+
+		<div>
+			<form method="post">
+				<button type="submit" name="acao" formaction="./minhasturmas" value="voltarcriartrabalho">voltar</button>
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+			</form>
+		</div>
+
+	</body>
+
+</html>

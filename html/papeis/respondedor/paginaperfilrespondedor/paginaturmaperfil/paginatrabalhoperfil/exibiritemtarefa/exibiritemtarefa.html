@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+			div.details details:not([open]) {
+
+				border: 1px solid #000000;
+				border-radius: 5px;
+				width: 70px;
+				padding: 10px;
+			}
+
+			div.details details[open] {
+
+				border: 1px solid #000000;
+				border-radius: 5px;
+				width: 400px;
+				padding: 10px;
+
+			}
+
+			div.details details[open] summary {
+
+				border-bottom: 1px solid #000000;
+				height: 23px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página do Perfil: Minhas Turmas: Turma $TURMA$</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div class="enunciado">
+
+			<img src="$ENUNCIADOTAREFA$" height="$ALTURAENUN$"/>
+
+		</div>
+
+		<div class="details">
+			<!--@dicas-->
+
+		</div>
+
+		<hr>
+
+		<div>
+
+			<form method="post" enctype="multipart/form-data">
+
+				<p>$RESPOSTAENVIADA$</p>
+
+				<p>Selecionar arquivo: <input type="file" id="resposta" name="resposta"></p>
+
+				<p><button type="submit" name="acao" formaction="" value="submeterresposta">submeter resposta</button></p>
+
+				<!--<input type="hidden" name="tipoTarefa" id="tipoTarefa" value="$TIPOTAREFA$">-->
+				<input type="hidden" name="idItemTarefa" value="$IDITEMTAREFA$">
+				<input type="hidden" name="idTarefa" value="$IDTAREFA$">
+				<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="idPerfilRespondedor" value="$IDPERFILRESPONDEDOR$">
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+
+			</form>
+
+		</div>
+
+		<hr>
+
+		<div>
+			<form method="post">
+				<button type="submit" name="acao" formaction="" value="voltarpaginaexibiritemtarefa">voltar</button>
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+				<input type="hidden" name="idPerfilRespondedor" value="$IDPERFILRESPONDEDOR$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+			</form>
+		</div>
+
+	</body>
+
+	<script>
+		var btUpResposta = document.getElementById("resposta");
+
+		btUpResposta.onchange = function validaArquivo() {
+
+				var arq = this.files[0];
+
+				if (arq.size > 2097152) {
+					alert("Arquivo muito grande! Tamanho máximo permitido é 2MB.");
+					this.value = "";
+					return;
+				}
+				
+				if ( !( arq.name.endsWith(".txt") ||
+						 arq.name.endsWith(".pdf") ||
+						 arq.name.endsWith(".png") ||
+						 arq.name.endsWith(".jpg") ||
+						 arq.name.endsWith(".gif") ) ) {
+					alert("Tipo de arquivo inválido! São aceitos somente arquivos dos tipos: Texto, PDF, PNG, JPEG, GIF.");
+					this.value = "";
+					return;
+				}
+			};
+	</script>
+</html>

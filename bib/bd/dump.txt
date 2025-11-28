@@ -1,0 +1,160 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE Tabela(colA text, colB int);
+INSERT INTO Tabela VALUES('arara',1);
+INSERT INTO Tabela VALUES('repimboca',2);
+CREATE TABLE Tabelab(cola integer, colb float, colc text);
+INSERT INTO Tabelab VALUES(1,1.1000000000000000888,'A vida seguiu em frente');
+INSERT INTO Tabelab VALUES(2,2.1000000000000000888,'');
+INSERT INTO Tabelab VALUES(3,9223372036854775807.8,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelab VALUES(9223372036854775807,4.4000000000000003552,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelab VALUES(9223372036854775807.8,5.4000000000000003552,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelab VALUES(2,2.1000000000000000888,'');
+INSERT INTO Tabelab VALUES(3,9223372036854775807.8,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelab VALUES(9223372036854775807,4.4000000000000003552,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelab VALUES(9223372036854775807.8,5.5,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelab VALUES(9223372036854775807,4.4000000000000003552,'você simplesmente não viu que ficou pra trás');
+CREATE TABLE Tabelac(cola INTEGER, colb REAL, colc TEXT) STRICT;
+INSERT INTO Tabelac VALUES(1,1.1000000000000000888,'A vida seguiu em frente');
+INSERT INTO Tabelac VALUES(2,2.1000000000000000888,'');
+INSERT INTO Tabelac VALUES(3,9223372036854775807.8,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelac VALUES(9223372036854775807,4.4000000000000003552,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelac VALUES(-9223372036854775808,5.5,'você simplesmente não viu que ficou pra trás');
+INSERT INTO Tabelac VALUES(NULL,1.1000000000000000888,'');
+INSERT INTO Tabelac VALUES(NULL,1.1000000000000000888,'');
+CREATE TABLE Usuario (
+	idUsuario integer PRIMARY KEY,
+	nome text,
+	login text unique,
+	senha text,
+	email text,
+	habilitado integer
+) STRICT;
+INSERT INTO Usuario VALUES(1,'Adm1','adm1','adm1','adm1@tarefas',1);
+INSERT INTO Usuario VALUES(2,'Adm2','adm2','adm2','adm2@tarefas',1);
+INSERT INTO Usuario VALUES(3,'Adm3','adm3','adm3','adm3@tarefas',1);
+INSERT INTO Usuario VALUES(4,'Adm4','adm4','adm4','adm4@tarefas',1);
+INSERT INTO Usuario VALUES(5,'Ela1','ela1','ela1','ela1@tarefas',1);
+INSERT INTO Usuario VALUES(6,'Ela2','ela2','ela2','ela2@tarefas',1);
+INSERT INTO Usuario VALUES(7,'Resp1','resp1','resp1','resp1@tarefas',1);
+CREATE TABLE Curso (
+	idCurso integer PRIMARY KEY,
+	codigo text Unique,
+	nome text,
+	obs text
+) STRICT;
+INSERT INTO Curso VALUES(1,'1','CursoA','obs');
+CREATE TABLE Sessao (
+	idSessao integer PRIMARY KEY,
+	idUsuario integer REFERENCES Usuario (idUsuario),
+	segHoraCriacao integer,
+	nsegHoraCriacao integer,
+	segHoraAtualizacao integer,
+	nsegHoraAtualizacao integer,
+	segTempoValidade integer,
+	segTempoValidadeMax integer
+) STRICT;
+CREATE TABLE SessaoEcerrada (
+	idSessao integer PRIMARY KEY,
+	idUsuario integer REFERENCES Usuario (idUsuario),
+	segHoraCriacao integer,
+	nsegHoraCriacao integer,
+	segHoraAtualizacao integer,
+	nsegHoraAtualizacao integer,
+	segTempoValidade integer,
+	segTempoValidadeMax integer
+) STRICT;
+CREATE TABLE Elaborador (
+	idElaborador integer PRIMARY KEY,
+	idUsuario integer REFERENCES Usuario (idUsuario)
+) STRICT;
+INSERT INTO Elaborador VALUES(1,5);
+INSERT INTO Elaborador VALUES(2,6);
+INSERT INTO Elaborador VALUES(3,1);
+INSERT INTO Elaborador VALUES(4,2);
+CREATE TABLE Disciplina (
+	idDisciplina integer PRIMARY KEY,
+	codigo text UNIQUE,
+	nome text UNIQUE,
+	obs text
+) STRICT;
+CREATE TABLE Turma (
+	idTurma integer PRIMARY KEY,
+	idDisciplina integer REFERENCES Disciplina (idDisciplina),
+	codigo text,
+	descricao text,
+	ano text,
+	semestre text,
+	obs text
+) STRICT;
+CREATE TABLE Turma_Trabalho (
+	idTurma integer NOT NULL REFERENCES Turma (idTurma),
+	idTrabalho integer NOT NULL REFERENCES Trabalho (idTrabalho),
+	ativo integer,
+	
+	PRIMARY KEY (idTurma, idTrabalho)
+) STRICT;
+CREATE TABLE Elaborador_Turma (
+	idElaborador integer NOT NULL REFERENCES Elaborador (idElaborador),
+	idTurma integer NOT NULL REFERENCES Turma (idTurma),
+	
+	PRIMARY KEY (idElaborador, idTurma)
+) STRICT;
+CREATE TABLE Respondedor_Turma (
+	idRespondedor integer NOT NULL REFERENCES Respondedor (idRespondedor),
+	idTurma integer NOT NULL REFERENCES Turma (idTurma),
+	habilitado integer,
+	
+	PRIMARY KEY (idRespondedor, idTurma)
+) STRICT;
+CREATE TABLE Contadores (
+	idUsuario integer,
+	idAdm integer,
+	idElaborador integer,
+	idRespondedor integer,
+	idCurso integer,
+	idDisciplina integer,
+	idTurma integer,
+	idTrabalho integer,
+	idSessao integer
+) STRICT;
+INSERT INTO Contadores VALUES(35,0,0,0,9,0,0,0,0);
+CREATE TABLE Trabalho (
+	idTrabalho integer PRIMARY KEY,
+	codigo text UNIQUE,
+	segHoraInicio integer,
+	segHoraFim integer,
+	oculto integer,
+	descricao text,
+	obs text
+) STRICT;
+CREATE TABLE Adm (
+	idAdm integer PRIMARY KEY,
+	idUsuario integer NOT NULL UNIQUE REFERENCES Usuario (idUsuario)
+) STRICT;
+INSERT INTO Adm VALUES(1,1);
+INSERT INTO Adm VALUES(2,2);
+INSERT INTO Adm VALUES(3,3);
+INSERT INTO Adm VALUES(4,4);
+CREATE TABLE Instituicao (
+	idInstituicao integer PRIMARY KEY,
+	nome text UNIQUE,
+	obs text
+) STRICT;
+INSERT INTO Instituicao VALUES(1,'UFC','Universidade Federal do Ceara');
+CREATE TABLE Respondedor (
+	idRespondedor integer PRIMARY KEY,
+	idUsuario integer unique REFERENCES Usuario(idUsuario),
+	matricula text,
+	idCurso integer REFERENCES Curso(idCurso),
+	idInstituicao integer REFERENCES Instituicao(idInstituicao),
+	habilitado integer,
+	obs text,
+	
+	UNIQUE (matricula, idInstituicao)
+) STRICT;
+INSERT INTO Respondedor VALUES(1,1,'111111',1,1,1,'obs');
+INSERT INTO Respondedor VALUES(2,5,'222222',1,1,1,'obs');
+INSERT INTO Respondedor VALUES(3,7,'333333',1,1,1,'obs');
+INSERT INTO Respondedor VALUES(4,4,'444444',1,1,1,'obs');
+COMMIT;

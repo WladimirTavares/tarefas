@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "respondedorturma.h": "c",
+        "visualizadorentrega.h": "c",
+        "multilinhas.h": "c",
+        "lugar.h": "c",
+        "bibstring2.h": "c",
+        "formhtmlcgi.h": "c",
+        "bibstring.h": "c",
+        "incluirtarefatrabalho.h": "c",
+        "paginaturma.h": "c"
+    }
+}

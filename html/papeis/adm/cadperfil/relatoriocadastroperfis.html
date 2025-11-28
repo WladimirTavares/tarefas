@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			div.formSalvar {
+
+				text-align: left;
+				//margin: auto;
+				width: 43em;
+			}
+
+			form.salvar {
+
+
+			}
+
+			table.camposSalvar {
+
+				width: 100%;
+				table-layout: fixed;
+				border-collapse: collapse;
+			}
+
+			td.nomeCampoSalvar {
+				text-align: right;
+				width: 8em;
+			}
+
+			td.campoSalvar {
+				text-align: left;
+				width: 27em;
+			}
+
+			td.espacoDir {
+				text-align: left;
+				width: 8em;
+			}
+
+			td.espacoVertical {
+				padding-bottom: .5em;
+			}
+
+			input.campoSalvar[type="text"] {
+
+				width: 90%;
+				font-family: default;
+				font-family: Arial, sans-serif;
+				font-size: 13.333px;
+			}
+
+			textarea.campoSalvar {
+
+				width: 90%;
+				resize: none;
+				font-family: Arial, sans-serif;
+				font-size: 13.333px;
+			}
+
+			div.cabecalho {
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+		</style>
+
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de ADM: Cadastrar perfis em lote (<span class="nomeUsuario">$USUARIOLOGIN$</span>)</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<!--<div class="formSalvar">-->
+		<div>
+
+
+
+			<form method="post" enctype="multipart/form-data">
+				<p>Lista de perfis submetidos</p>
+
+				<!-- @listaPerfisSubmetidos -->
+
+				<button type="submit" name="acao" id="enviarperfis" formaction="" value="retornarcadperfil">retornar p/ cadastro de perfil</button>
+
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+			</form>
+
+		</div>
+
+		<hr>
+
+		<!-- @antesRelatorioCadastro -->
+		<div class="linhasPerfis">
+
+			<!-- @linhasRelatorioCadastro -->
+		</div>
+
+	</body>
+
+</html>

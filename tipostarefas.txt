@@ -1,0 +1,31 @@
+Tipos de tarefas
+
+A seguintes funcionalidades devem ser editadas para cada tipo de tarefa
+
+- Criação (novatarefatrabalho.h) (escolha de tipo de tarefa)
+- Exibição de item de tarefa para professor (paginaitemtarefa.h)
+- Exibição de item de tarefa para respondedor (exibiritemtarefa.h)
+- Upload de resposta (tipos de arquivos aceitos), (exibiritemtarefa.h)
+- Download de entregas (entregastarefa.h, visualizadorentrega.h)
+- Exibição de trabalho para respondedor (detectar resposta enviada) (paginatrabalhoperfil.h)
+- inclusão (incluirtarefatrabalho.h)
+- duplicação (duplicartarefatrabalho.h)
+
+
+
+
+Roteiro para inclusão de novo tipo de tarefa
+--------------------------------------------
+
+1. Definir tipo de tarefa no bd/tarefas.h
+
+2. Criação de nova tarefa
+    2.1 Incluir tipo de tarefa no arquivo escolhertipotarefa.html
+    2.2 Definir comportamento para o novo tipo de tarefa no método carregarPaginaCadastrarTarefa() (novatarefatrabalho.h)
+    2.3 Definir comportamento do botão próximo/cadastrar tarefa para o novo tipo de tarefa no método pagindaCadastrarTarefa() (novatarefatrabalho.h)
+    2.4 Definir comportamento para o novo tipo de tarefa no método cadastrarTarefa() (novatarefatrabalho.h)
+            - direcionar para o método cadastrarTarefa<Tipo-de-Tarefa>()
+    2.5 Criar método cadastrarTarefa<Tipo-de-Tarefa>() no arquivo novatarefatrabalho.h
+            - é nesse método que a tarefa vai ser cadastrada com suas particularidades e direcionará para mais etapas de criação de tarefa, se for o caso
+            
+

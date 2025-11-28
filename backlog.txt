@@ -1,0 +1,89 @@
+BACKLOG tarefas
+
+- caso seja alterada a senha de um usuário, encerrar todas as sessões ativas (ou deixar apenas a sessão atual, caso seja o próprio usuário que esteja alterando a senha).
+
+- Em todas as rotinas de geração de páginas há variáveis usadas para montar linhas de código html que tem tamanho limitado. Pode haver um overflow caso haja a tentativa de construção de linhas com tamanho maior que o reservado para a variável. Isso deve ser tratado.
+
+- No cadastro de turma dentro do menu "Professor" a remoção de turma não checa se o id do usuário que apaga é o idProfCriador. O mesmo para atualização. (A busca checa se quem busca é o professor que criou a turma.)
+
+- As funcionalidades visualizarXXX() testam se um objeto (Turma, Perfil, etc.) foi passado checando por um ponteiro NULL. Acontece que se a busca por id não der retorno, o ponteiro recebe o resultado de malloc(0), que deveria ser NULL, mas é implementatoin defined e no caso do gcc retorna um valor não nulo. Ou seja, é passado um ponteiro não nulo, mas que não tem memória alocada. A página de visualização tenta acessar via esse ponteiro que não tem memória alocada, causando erro.
+
+A solução é usar outra indicação para checar se houve retorno, ao invés de checar ponteiro nulo.
+
+- A visualização de turmas, sempre consulta o banco para pegar a lista de professores. Quando há uma atualização frustrada ou uma remoção frustrada, em que a página de visualização deve ser recarregada, o banco será consultado novamente, embora não precisasse, se resgatássemos essas informações do banco.
+
+- A busca de usuário via login na inclusão de novo perfil não trata adequadamente (não há mensagem de erro) o caso de não ser retornado nenhum usuário.
+
+- A inclusão de novo professor participante não checa se usuário é professor (embora a busca faça essa checagem).
+
+- *** Está faltando realizar a validação dos dados dos campos antes de fazer as consultas aos bancos nas telas dos menu professor
+
+- Nos cadastros de perfis e respondedores em turma em lote, checar o que acontece se tentar inserir um perfil de um curso que não existe
+
+- Revisar os cadastros em lote
+
+- No cadastro de trabalho, tratar a posição do trabalho. Ao definir ou alterar a posição, o trabalho ocupa aquela posição, atualizando os trabalhos com posição prévia maior ou igual a definida.
+
+- (MUITO ESQUISITO, melhor esclarecer isso de uma vez por todas) O controle de sessão não considera o tempo real, deve usar time() e localtime() para o tempo real. Consertar isso com urgência!!!
+
+https://stackoverflow.com/questions/38913264/any-difference-between-clock-gettime-clock-realtime-and-time
+https://stackoverflow.com/questions/3523442/difference-between-clock-realtime-and-clock-monotonic
+https://stackoverflow.com/questions/1442116/how-to-get-the-date-and-time-values-in-a-c-program
+
+
+- Checar todas as possibilidades de erro no procedimento de montagem de tarefas e desfazer alterações (criação de diretórios, arquivos, etc.) em caso de falha.
+
+- Implementar a posição da tarefa (numTarefa) na montagem de tarefas.
+
+- Continuar com a montagem das tarefas...
+
+- Checar se foi feita atribuição direta de literal string a ponteiro char (usar regex para encontrar isso). Substituir essas atribuições pela função copiarstr(). Pelo que pude apurar, os literais string existem durante todo o programa e em princípio não teria problema. Então, a princípio, está tudo certo, mas seria bom checar. Não é a mesma coisa que incializar um array com um literal string. Os arrays, quando inicializados com literais string, recebem uma cópia do literal e desaparece no final da função.
+
+Possibilidades de usos suspeitos:
+
+char* idItemTarefa = cf ? cf->valor : "";
+char* str = "";
+
+https://stackoverflow.com/questions/56667780/c-do-all-string-literals-have-static-storage-duration
+https://stackoverflow.com/questions/9970295/life-time-of-a-string-literal-in-c
+
+
+- Ajeitar a posição di item de tarefa e do trabalho
+
+- Definir valores de retorno de erro nas funções básicas do banco (tarefasbd.h)
+
+- Validar todos os campos em todas as página para evitar code injection nas consultas do banco de dados
+
+- A função concatstr() pode falhar na alocação de memória via malloc. Isso pode causar erro ou comportamento indefinido. Além disso, nos locais onde a função é chamada, não há verificação do retorno da função. Nem todas as chamadas precisam ser checadas, mas é necessário fazer uma verificação. Uma segunda função concatstr2 foi feita para checar o erro da alocação.
+
+- A falha em criar item de tarefa não está removendo a tarefa (no caso de criação de tarefa). Essa tarefa fica inacessível, deve ser removida.
+
+- A remoção de item de tarefas ainda não remove itens de tarefas que possuem respostas enviadas.
+
+- O id do perfil do respondedor é colocado na página. É necessário colocá-lo na sessão, pois é possível, sabendo o id do perfil de outrém, acessá-lo hackeando os campos do formulário html.
+
+- O valor do botão voltar deve ser retirado da página e colocado na sessão. Do jeito que está, é possível entrar em qualquer lugar do sistema alterado o valor do campo ação do formulário.
+
+- Checar falha na criação do .png durante a criação de um item de tarefa/tarefa e "desfazer" o que for necessário.
+
+- Revisar os procedimentos de criação de tarefa e de criação de trabalho
+
+- Criar função para a conversão de arquivo pdf para png. Isso evita o uso da linha de comando espalhada pelo código. (tarefaSubmissaoSimples.h, exibirItemTarefa.h)
+
+- Apagar tarefa em caso de falha na criação do item de tarefa (checar todos os tipos de tarefa)
+
+- A remoção de tarefa não está retornando código de erro
+
+- O procedimento de cadastro de respondedores em turma não faz a checagem de caracteres válidos
+
+- A visualização de entregas do tipo imagem requer recarregar a página para a imagem aparecer. Tentar resolver isso.
+
+- Na rotina de avaliação, utilizar caminhos de arquivo relativos.
+
+- Checar os valores de retorno e mensagens do ulimit.
+
+- Na rotina de avaliação, checar os tamanhos da strings (especialmente cmd e caminho).
+
+- No método carregarPaginaExibirItemTarefa, não está sendo verificada uma falha de compilação que não tenha gerado o arquivo gccresposta.exit. Por outro lado,
+  é necessário reconhecer os primeiros acessos à página de exibir item tarefa antes de ter havido tentativa de compilação, pois nesses casos ainda não deve
+  haver o arquivo gccresposta.exit.

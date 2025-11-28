@@ -1,0 +1,346 @@
+<!doctype html>
+<meta charset=utf8>
+<html>
+    <head>
+        <style>
+            div.editor {
+                width: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>código C, casos de teste estáticos<br>Configurar Auto-Correção</h1>
+        <br>
+
+        <h2>1. Cabeçalho</h2>
+        <div class="editor" id="div1"></div>
+        <br>
+
+        <h2>2. Cabeçalho do modelo</h2>
+        <div class="editor" id="div2"></div>
+        <br>
+
+        <h2>3. Solução</h2>
+        <div class="editor" id="div3"></div>
+        <br>
+
+        <h2>4. Número de casos de teste</h2>
+        <div class="editor" id="div4"></div>
+        <br>
+
+        
+
+        <h2>5. Geração de caso de teste</h2>
+        <div class="editor" id="div5"></div>
+        <br>
+
+        <h2>6. Salvar caso de teste</h2>
+        <div class="editor" id="div6"></div>
+        <br>
+
+        <h2>7. Carregar variáveis globais de entrada e saída</h2>
+        <div class="editor" id="div7"></div>
+        <br>
+
+        <h2>8. Salvar variáveis globais de entrada e saída</h2>
+        <div class="editor" id="div8"></div>
+        <br>
+
+        <h2>9. Avaliação Estática</h2>
+        <div class="editor" id="div9"></div>
+        <br>
+
+        <script>
+            var mEV = null;
+            var mBS = null;
+            var mKM  = null;
+            var mIT = null;
+            var mCPP = null;
+            var mOD = null;
+        </script>
+        <script src="$URLDWLTAREFAS$/editor.bundle.js"></script>
+        <script>
+            let ed1 = new mEV({
+            doc : "// inclua as bibliotecas e definas as variáveis globais de entrada e saída\n"
+                + "#include <stdlib.h>\n"
+                + "#include <stdio.h>\n\n",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div1'),
+            });
+
+            let ed2 = new mEV({
+            doc : "// inclua as bibliotecas e definas as variáveis globais de entrada e saída do modelo\n"
+                + "#include <stdlib.h>\n"
+                + "#include <stdio.h>\n\n",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div2'),
+            });
+
+            let ed3 = new mEV({
+            doc : "// escreva a solução do problema\n"
+                + "// "
+                + "\n"
+                + "int solucaoTarefa() {\n"
+                + "\n"
+                + "}",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div3'),
+            });
+
+            let ed4 = new mEV({
+            doc : "// número de casos de teste\n"
+                + "int ncts = 3;",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div4'),
+            });
+
+            let ed5 = new mEV({
+            doc : "// inicializa a semente randômica\n"
+                + "#include <sys/time.h>\n"
+                + "void iniRand() {\n"
+                + "  struct timeval time;\n"
+                + "  gettimeofday(&time,NULL);\n"
+                + "  srand((time.tv_sec * 1000) + (time.tv_usec / 1000));\n"
+                + "  \n"
+                + "}\n"
+                + "\n"
+                + "// gerar e carregar valores de variáveis globais de entrada e inicializar outras variáveis globais\n"
+                + "int gerarCasoTeste(int ct) {\n"
+                + "  \n"
+                + "}\n"
+                + "\n",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div5'),
+            });
+
+            let ed6 = new mEV({
+            doc : "// gerar os arquivos (dados estáticos) de caso de teste\n"
+                + "int gerarArquivosCasoTeste(int ct, char* dirct) {\n"
+                + "  // a variável 'dirct' é o caminho até o diretório onde ficam os\n"
+                + "  // os arquivos referentes ao caso de teste (entrada.fb, gabarito.fb)\n"
+                + "  // você pode colocar qualquer outro arquivo que queira nesse diretório\n"
+                + "  \n"
+                + "    // gerar valores de entrada\n"
+                + "    gerarCasoTeste(ct);\n"
+                + "\n"
+                + "    // salvar entrada\n"
+                + "    char caminho[4097];\n"
+  	            + "    sprintf(caminho, \"%s/entrada.txt\", dirct);\n"
+  	            + "    FILE* f = fopen(caminho, \"w\");\n"
+                + "\n"
+                + "         // gravar entrada\n"
+                + "\n"
+                + "    fclose(f);\n"
+                + "\n"
+                + "    // calcular solução\n"
+                + "    solucaoTarefa();\n"
+                + "\n"
+                + "    // salvar gabarito\n"
+                + "    sprintf(caminho, \"%s/gabarito.txt\", dirct);\n"
+                + "    f = fopen(caminho, \"w\");\n"
+                + "\n"
+                + "         // gravar gabarito\n"
+                + "\n"
+                + "\n  fclose(f);\n"
+                + "}",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div6'),
+            });
+
+            let ed7 = new mEV({
+            doc : "// esta rotina será executada antes de cada caso de teste\n"
+                + "// do programa submetido, carregando valores para as\n"
+                + "// variáveis globais, seja a partir dos dados gerados em arquivo,\n"
+                + "// seja gerando dados em tempo de execução"
+                + "\n"
+                + "\n"
+                + "int __carregar_dados_casoteste(int ct, char* dirct) {\n"
+                + "  // a variável 'dirct' é o caminho até o diretório onde ficam os\n"
+                + "  // os arquivos referentes aos casos de teste (entrada.fb, gabarito.fb, etc.)\n"
+                + "  // acesse esses arquivos no modo 'readonly'\n"
+                + "  \n"
+                + "     // abrir arquivo com entradas"
+                + "     char caminho[4097];\n"
+                + "     sprintf(caminho, \"%s/entrada.txt\", dirct);\n"
+                + "     FILE* f = fopen(caminho, \"r\");\n"
+                + "     \n"
+                + "         // carregar dados de entrada\n"
+                + "     \n"
+                + "     fclose(f);\n"
+                + "     \n"
+                + "}",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div7'),
+            });
+
+            let ed8 = new mEV({
+            doc : "// esta rotina será executada ao final de cada caso de teste\n"
+                + "// do programa submetido para salvar a resposta em arquivo\n"
+                + "// a variável dirctresp é o diretório onde a saída do caso de teste\n"
+                + "// gerada pelo programa submetido é armazenada\n"
+                + "\n"
+                + "int __salvar_saida_casoteste(int ct, char* dirctresp) {\n"
+                + "  // a variável 'dirctresp' é o caminho até o diretório do caso de teste\n"
+                + "  // onde os dados gerados pelo caso de teste do programa submetido\n"
+                + "  // são guardados (saida.fb)\n"
+                + "\n"
+                + "     //abrir arquivo de saída\n"
+                + "     char caminho[4097];"
+                + "     sprintf(caminho, \"%s/saida.txt\", dirctresp);\n"
+                + "     FILE* f = fopen(caminho, \"w\");\n"
+                + "\n"
+                + "         // gravar dados de saída"
+                + "\n"
+                + "     fclose(f);\n"
+                + "}",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div8'),
+            });
+
+            let ed9 = new mEV({
+            doc : "// rotina de avaliação estática\n"
+                + "// recebe o número do caso de teste e o diretório onde os dados\n"
+                + "// de execução do caso de teste são salvos\n"
+                + "\n"
+                + "int __avaliacaoEstatica(int ct, char* dirct, char* dirctresp) {\n"
+                + "\n"
+                + "     // abrir arquivo de gabarito e entrada (caso necessário)\n"
+                + "     char caminho[4097];\n"
+                + "     sprintf(caminho, \"%s/gabarito.txt\", dirct);\n"
+                + "     FILE* fg = fopen(caminho, \"r\");\n"
+                + "     //sprintf(caminho, \"%s/entrada.txt\", dirct);\n"
+                + "     //FILE* fe = fopen(caminho, \"r\");\n"
+                + "\n"
+                + "         //carregar gabarito (e entrada)\n"
+                + "\n"
+                + "     fclose(fg);\n"
+                + "     //fclose(fe);\n"
+                + "\n"
+                + "     // abrir arquivo de saída\n"
+                + "     sprintf(caminho, \"%s/saida.txt\", dirctresp);\n"
+                + "     FILE* fs = fopen(caminho, \"r\");\n"
+                + "\n"
+                + "         //carregar saída da resposta submetida\n"
+                + "\n"
+                + "     // avaliar saída com relação ao gabarito\n"
+                + "\n"
+                + "}",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div9'),
+            });
+
+            function extrairCodigo() {
+                document.getElementById('taCab').value = ed1.state.doc;
+                document.getElementById('taCabMod').value = ed2.state.doc;
+                document.getElementById('taSol').value = ed3.state.doc;
+                document.getElementById('taNumCts').value = ed4.state.doc;
+                document.getElementById('taGerCt').value = ed5.state.doc;
+                document.getElementById('taSalvarCt').value = ed6.state.doc;
+                document.getElementById('taCarregarCt').value = ed7.state.doc;
+                document.getElementById('taSalvarSaida').value = ed8.state.doc;
+                document.getElementById('taAvalEstat').value = ed9.state.doc;
+            }
+
+        </script>
+
+        <form method="post" action="" onsubmit="extrairCodigo();">
+            <textarea name="taCab" id="taCab" hidden></textarea>
+            <textarea name="taCabMod" id="taCabMod" hidden></textarea>
+            <textarea name="taSol" id="taSol" hidden></textarea>
+            <textarea name="taNumCts" id="taNumCts" hidden></textarea>
+            <textarea name="taGerCt" id="taGerCt" hidden></textarea>
+            <textarea name="taSalvarCt" id="taSalvarCt" hidden></textarea>
+            <textarea name="taCarregarCt" id="taCarregarCt" hidden></textarea>
+            <textarea name="taSalvarSaida" id="taSalvarSaida" hidden></textarea>
+            <textarea name="taAvalEstat" id="taAvalEstat" hidden></textarea>
+            <button type="submit" name="acao" value="enviarconfavaliacaoestatica">enviar</button>
+            <!--<input type="hidden" name="tipoTarefa" id="tipoTarefa" value="$TIPOTAREFA$">
+            <input type="hidden" name="idItemTarefa" value="$IDITEMTAREFA$">-->
+            <input type="hidden" name="idTarefa" value="$IDTAREFA$">
+            <input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+            <input type="hidden" name="idTurma" value="$IDTURMA$">
+            <input type="hidden" name="ids" value="$IDSESSAO$">
+        </form>
+    </body>
+</html>

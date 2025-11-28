@@ -1,0 +1,36 @@
+<div>
+    <button onclick="zoomIn(document.getElementById('visuImg'));">Zoom in</button> <button onclick="zoomOut(document.getElementById('visuImg'));">Zoom out</button>
+</div>
+<br>
+<img id="visuImg" />
+<script>
+    var visuImg = document.getElementById("visuImg");
+    
+
+    function zoomIn(imgEl) {
+      ratio = visuImg.naturalHeight / visuImg.naturalWidth;
+      imgEl.width = 1.1 * imgEl.width;
+      imgEl.height = imgEl.width * ratio;
+    }
+
+    function zoomOut(imgEl) {
+      ratio = visuImg.naturalHeight / visuImg.naturalWidth;
+      imgEl.width = 0.909090909 * imgEl.width;
+      imgEl.height = imgEl.width * ratio;
+    }
+
+    function downloadImage(url) {
+      fetch(url, {
+        mode : 'no-cors',
+      })
+        .then(response => response.blob())
+        .then(blob => {
+                        let blobUrl = window.URL.createObjectURL(blob);
+                        visuImg.src = blobUrl;
+                        visuImg.width = 800;
+                      })
+    }
+
+    downloadImage('$VISUURLARQ$');
+
+</script>

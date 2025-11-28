@@ -1,0 +1,29 @@
+<div>
+    <button onclick="zoomIn(document.getElementById('visuTxt'));">+A</button> <button onclick="zoomOut(document.getElementById('visuTxt'));">-A</button>
+</div>
+
+<textarea id="visuTxt" style="font-size: 12px" cols="80" rows="40">
+</textarea>
+<script>
+    var url = '$VISUURLARQ$';
+    var storedText;
+
+    fetch(url)
+    .then(function(response) {
+            response.text().then(function(text) {
+                                    document.getElementById('visuTxt').value = text;
+                                    });
+    });
+
+    function zoomIn(ta) {
+        var fs = parseInt(ta.style.fontSize);
+        fs += 2;
+        ta.style.fontSize = fs + "px";
+    }
+
+    function zoomOut(ta) {
+        var fs = parseInt(ta.style.fontSize);
+        fs -= 2;
+        ta.style.fontSize = fs + "px";
+    }
+</script>

@@ -1,0 +1,56 @@
+-- instalar apache 
+
+sudo apt install apache2
+
+--Instalar gcc (build-essential)
+
+sudo apt build-essential
+
+
+--Habilitar cgid no apache
+
+sudo a2enmod cgid
+
+
+--Instalar sqlite3 e interface do sqlite3 para C
+
+sudo apt update
+sudo apt install sqlite3
+sudo apt-get install libsqlite3-dev
+
+
+-- Instalar ImageMagick (já vem instalado no ubuntu)
+
+Alterar cofiguração para permitir a conversão de pdf
+(Estou usando a versão 6, não sei se funciona com a versão mais recente.)
+
+	* no arquivo /etc/ImageMagick-6/policy.xml
+	* comentar a linha
+
+	<policy domain="coder" rights="none" pattern="PDF" />
+
+
+-- criar diretório onde o sistema ficará (veja o script inst.sh)
+
+sudo inst.sh
+
+-- habilitar acesso ao diretório de dados das tarefas, onde, por hora, estará o arquivos de enunciado
+	* no arquivo /etc/apache2/conf-available/serve-cgi-bin.conf (colocar antes da linha </IfModule> no final do arquivo)
+
+
+		# Configuração do tarefas no apache
+		<IfDefine ENABLE_USR_LIB_CGI_BIN>
+
+				Alias "/tarefasdwl" "/usr/lib/cgi-bin/tarefas2/downloads"
+		
+				ScriptAlias "/" "/usr/lib/cgi-bin/tarefas2/tarefas.cgi"
+
+				# bloqueia acesso aos diretórios de dados
+				<Directory "/usr/lib/cgi-bin/tarefas2/dados">
+					AllowOverride None
+					Require all denied
+				</Directory>
+
+		</IfDefine>
+
+	* https://httpd.apache.org/docs/2.4/mod/mod_alias.html#alias

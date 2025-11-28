@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			div.cabecalho {
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Olá <span class="nomeUsuario">$USUARIOLOGIN$</span>! Bem-vindo ao Tarefas!!!</p>
+			</span>
+			<span class="cabecalhoCentro">
+
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div class="corpoPapeis">
+
+			<!-- @corpoPapeis -->
+		</div>
+
+	</body>
+
+</html>

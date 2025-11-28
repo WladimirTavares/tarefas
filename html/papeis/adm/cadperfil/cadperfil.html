@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			span.emLinha {
+				float: left;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			div.formBusca {
+
+				text-align: left;
+				//margin: auto;
+				width: 43em;
+			}
+
+			table.camposBusca {
+
+				width: 100%;
+				table-layout: fixed;
+				border-collapse: collapse;
+			}
+
+			td.nomeCampoBusca {
+				text-align: right;
+				width: 8em;
+			}
+
+			td.campoBusca {
+				text-align: left;
+				width: 27em;
+			}
+
+			td.espacoDir {
+				text-align: left;
+				width: 8em;
+			}
+
+			td.espacoVertical {
+				padding-bottom: .5em;
+			}
+
+			input.campoBusca[type="text"] {
+
+				width: 90%;
+			}
+
+			div.cabecalho {
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+		</style>
+
+		<script>
+			function selInst(f) {
+
+				var input = document.createElement('input');
+				input.setAttribute('name', "acao");
+				input.setAttribute('value', "selinstituicaobuscapr");
+				input.setAttribute('type', "hidden");
+
+				f.appendChild(input);
+
+				f.submit();
+			}
+		</script>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de ADM: Cadastro de Perfil</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div class="novo">
+			<span class="emLinha"><form method="post"><button type="submit" name="acao" formaction="" value="novoperfil">Cadastrar novo Perfil</button><input type="hidden" name="ids" value="$IDSESSAO$"></form></span><span class="emLinha">&nbsp;&nbsp;&nbsp;</span>
+			<span><form method="post"><button type="submit" name="acao" formaction="" value="cadloteperfis">Cadastrar perfis em lote</button><input type="hidden" name="ids" value="$IDSESSAO$"></form></span>
+		</div>
+
+		<hr>
+
+		<div class="formBusca">
+		<p>Pesquisar Perfil</p>
+
+			<form method="post">
+					<table class="camposBusca">
+						<tr>
+							<td class="nomeCampoBusca">Nome:</td> <td class="campoBusca"><input type="text" class="campoBusca" maxlength="100" name="nome" value="$NOME$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">Login:</td> <td class="campoBusca"><input type="text" class="campoBusca" maxlength="100" name="login" value="$LOGIN$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">E-mail:</td> <td class="campoBusca"><input type="text" class="campoBusca" maxlength="100" name="email" value="$EMAIL$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">Matrícula:</td> <td class="campoBusca"><input type="text" class="campoBusca" maxlength="100" name="matricula" value="$MATRICULA$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">Instituição do Curso:</td> <td class="campoBusca"><select name="idInst" onchange="selInst(this.form)">@OpcoesInst</select></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">Curso:</td> <td class="campoBusca"><select name="idCurso">@OpcoesCurso</select></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca"></td> <td class="campoBusca"><input type="checkbox" name="habilitado" id="buscaHabilitado" $HABILITADO$><label for="buscaHabilitado">Habilitado</label></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">Observação:</td> <td class="campoBusca"><input type="text" class="campoBusca" maxlength="100" name="obs" value="$OBS$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="espacoVertical"> </td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca"></td> <td class="campoBusca"><button type="submit" id="acao" name="acao" formaction="" value="buscarpr">buscar</button></td> <td class="espacoDir"></td>
+						</tr>
+					</table>
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+			</form>
+		</div>
+
+		<hr>
+
+		<div class="resultadoBusca">
+
+			<!-- @resultadoBusca -->
+		</div>
+
+		<!-- @antesDivVoltar -->
+		<div>
+			<form method="post"><button type="submit" name="acao" formaction="" value="voltarcadperfil">voltar</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,456 @@
+<!doctype html>
+<meta charset=utf8>
+<html>
+    <head>
+        <style>
+            div.editor {
+                width: 100%;
+            }
+
+
+
+
+             /* Style the tab */
+            .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            }
+
+            /* Style the buttons that are used to open the tab content */
+            .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+            background-color: #ddd;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+            background-color: #ccc;
+            }
+
+            /* Style the tab content */
+            .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            } 
+        </style>
+        <script>
+            function openTab(evt, tabName) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="tablinks"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    // and remove the class "active"
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+
+                    // Grava botão selecionado
+                    // Encontra a posição do botão selecionado e guarda a posição no campo abaAtiva do formulário
+                    if (evt.currentTarget == tablinks[i]) {
+                        document.getElementsByName("abaAtiva")[0].value = evt.currentTarget.id
+                        document.getElementsByName("divAbaAtiva")[0].value = tabName
+                    }
+                }
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(tabName).style.display = "block";
+                evt.currentTarget.className += " active";
+            } 
+        </script>
+    </head>
+    <body>
+        <h1>código C, casos de teste estáticos<br>Configurar Auto-Correção v2</h1>
+        <br>
+        <button id="btdfonte">A-</button>&nbsp;<button id="btafonte">A+</button>
+
+         <!-- Tab links -->
+        <div class="tab">
+            <button id="btPI" class="tablinks active" onclick="openTab(event, 'PI')">I - Solução</button>
+            <button id="btPII" class="tablinks" onclick="openTab(event, 'PII')">II - Geração dos Casos de Teste</button>
+            <button id="btPIII" class="tablinks" onclick="openTab(event, 'PIII')">III - Execução dos Casos de Teste</button>
+            <button id="btPIV" class="tablinks" onclick="openTab(event, 'PIV')">IV - Correção e Feedback</button>
+        </div>
+        
+        <!-- Tab content -->
+        <div id="PI" class="tabcontent" style="display: block;">
+            <h2>1. Cabeçalho</h2>
+            <div class="editor" id="div1"></div>
+            <br>
+
+            <h2>2. Modelo</h2>
+            <div class="editor" id="div2"></div>
+            <br>
+
+            <h2>3. Solução</h2>
+            <div class="editor" id="div3"></div>
+            <br>
+
+            <hr>
+            <br>
+            <div>
+				$STATUSCOMPSOL$
+				<pre>$GCCCOMPSOLLOG$</pre>
+			</div>
+        </div>
+        
+        <div id="PII" class="tabcontent">
+            <h2>4. Número de casos de teste</h2>
+            <div class="editor" id="divncts"><input type="number" id="inptnumcts" name="inptnumcts" min="1" max="10" value="$NUMCTS$" /></div>
+            <br>
+
+            <h2>5. Geração de caso de teste</h2>
+            <div class="editor" id="div5"></div>
+            <br>
+
+            <h2>6. Salvar caso de teste</h2>
+            <div class="editor" id="div6"></div>
+            <br>
+
+            <hr>
+            <br>
+
+            <div>
+				$STATUSCOMPGERCT$
+				<pre>$GCCCOMPGERCTLOG$</pre>
+                $STATUSEXECGERCT$
+                <pre>$EXECGERCTLOG$</pre>
+			</div>
+        </div>
+        
+        <div id="PIII" class="tabcontent">
+            <h2>7. Carregar variáveis globais de entrada e saída</h2>
+            <div class="editor" id="div7"></div>
+            <br>
+
+            <h2>8. Salvar variáveis globais de entrada e saída</h2>
+            <div class="editor" id="div8"></div>
+            <br>
+
+            <hr>
+            <br>
+
+            <div>
+				$STATUSCOMPEXECCT$
+				<pre>$GCCCOMPEXECCTLOG$</pre>
+			</div>
+
+        </div>
+
+        <div id="PIV" class="tabcontent">
+            <h2>9. Avaliação Estática</h2>
+            <div class="editor" id="div9"></div>
+            <br>
+
+            <h2>10. Rotinas de Feedback</h2>
+            <div class="editor" id="div10"></div>
+            <br>
+
+            <hr>
+            <br>
+
+            $STATUSCOMPEXECAVAL$
+            <pre>$GCCCOMPEXECAVALLOG$</pre>
+            $STATUSCOMPEXECFEEDBACK$
+            <pre>$GCCCOMPEXECFEEDBACKLOG$</pre>
+
+            <hr>
+            <br>
+
+            <div>
+                $FEEDBACKGABARITO$
+            </div>
+
+        </div>
+
+  
+
+        
+
+        <!--<h2>4. Número de casos de teste</h2>
+        <div class="editor" id="div4"></div>
+        <br>-->
+
+        
+
+        
+
+        
+
+        <script>
+            var mEV = null;
+            var mBS = null;
+            var mKM  = null;
+            var mIT = null;
+            var mCPP = null;
+            var mOD = null;
+        </script>
+        <script src="$URLDWLTAREFAS$/editor.bundle.js"></script>
+        <script>
+            let ed1 = new mEV({
+            doc : "$CAB$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div1'),
+            });
+
+            let ed2 = new mEV({
+            doc : "$CABMOD$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div2'),
+            });
+
+            let ed3 = new mEV({
+            doc : "$SOL$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div3'),
+            });
+
+            /*
+            let ed4 = new mEV({
+            doc : "$NUMCTS$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div4'),
+            });
+            */
+
+            let ed5 = new mEV({
+            doc : "$GERCT$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div5'),
+            });
+
+            let ed6 = new mEV({
+            doc : "$SALVARCT$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div6'),
+            });
+
+            let ed7 = new mEV({
+            doc : "$CARREGARCT$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div7'),
+            });
+
+            let ed8 = new mEV({
+            doc : "$SALVARSAIDA$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div8'),
+            });
+
+            let ed9 = new mEV({
+            doc : "$AVALESTAT$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div9'),
+            });
+
+            let ed10 = new mEV({
+            doc : "$FEEDBACK$",
+            extensions: [mBS,
+                            mKM.of({
+                                key: 'Tab',
+                                preventDefault: true,
+                                run: mIT,
+                            }),
+                        mCPP(),
+                        //myTheme
+                        mOD
+                        ],
+            parent: document.getElementById('div10'),
+            });
+
+            function extrairCodigo() {
+                document.getElementById('taCab').value = ed1.state.doc;
+                document.getElementById('taCabMod').value = ed2.state.doc;
+                document.getElementById('taSol').value = ed3.state.doc;
+                //document.getElementById('taNumCts').value = ed4.state.doc;
+                document.getElementById('numcts').value = document.getElementById('inptnumcts').value;
+                document.getElementById('taGerCt').value = ed5.state.doc;
+                document.getElementById('taSalvarCt').value = ed6.state.doc;
+                document.getElementById('taCarregarCt').value = ed7.state.doc;
+                document.getElementById('taSalvarSaida').value = ed8.state.doc;
+                document.getElementById('taAvalEstat').value = ed9.state.doc;
+                document.getElementById('taFeedBack').value = ed10.state.doc;
+            }
+
+            var tamfonte = 12;
+            
+            function afonte() {
+                tamfonte += 2;
+
+                var cssclass = document.querySelectorAll('.cm-editor');
+                cssclass.forEach(editor => {
+                    editor.style.fontSize = tamfonte + 'px';
+                    
+                });
+
+                cssclass = document.querySelectorAll('.cm-content');
+                cssclass.forEach(editor => {
+                    editor.style.fontSize = tamfonte + 'px';
+                    
+                });
+            }
+            function dfonte() {
+                tamfonte -= 2;
+
+                var cssclass = document.querySelectorAll('.cm-editor');
+                cssclass.forEach(editor => {
+                    editor.style.fontSize = tamfonte + 'px';
+                    
+                });
+
+                cssclass = document.querySelectorAll('.cm-content');
+                cssclass.forEach(editor => {
+                    editor.style.fontSize = tamfonte + 'px';
+                    
+                });
+            }
+
+            document.getElementById('btafonte').onclick = afonte;
+            document.getElementById('btdfonte').onclick = dfonte;
+
+        </script>
+
+        <hr>
+
+        <button type="submit" name="acao" value="checarconfavaliacaocodigoc" form="formPagConfAvalC">Checar Avaliação</button>
+
+        <hr>
+
+        <form id="formPagConfAvalC" method="post" action="" onsubmit="extrairCodigo();">
+            <textarea name="taCab" id="taCab" hidden></textarea>
+            <textarea name="taCabMod" id="taCabMod" hidden></textarea>
+            <textarea name="taSol" id="taSol" hidden></textarea>
+            <!--<textarea name="taNumCts" id="taNumCts" hidden></textarea>-->
+            <input type="hidden" name="numcts" id="numcts" />
+            <textarea name="taGerCt" id="taGerCt" hidden></textarea>
+            <textarea name="taSalvarCt" id="taSalvarCt" hidden></textarea>
+            <textarea name="taCarregarCt" id="taCarregarCt" hidden></textarea>
+            <textarea name="taSalvarSaida" id="taSalvarSaida" hidden></textarea>
+            <textarea name="taAvalEstat" id="taAvalEstat" hidden></textarea>
+            <textarea name="taFeedBack" id="taFeedBack" hidden></textarea>
+            <button type="submit" name="acao" value="$ACAO$">enviar</button>
+            <!--<input type="hidden" name="tipoTarefa" id="tipoTarefa" value="$TIPOTAREFA$">-->
+            <input type="hidden" name="idItemTarefa" value="$IDITEMTAREFA$">
+            <input type="hidden" name="idTarefa" value="$IDTAREFA$">
+            <input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+            <input type="hidden" name="idTurma" value="$IDTURMA$">
+            <input type="hidden" name="ids" value="$IDSESSAO$">
+
+            <input type="hidden" name="abaAtiva" value="$ABAATIVA$">
+            <input type="hidden" name="divAbaAtiva" value="$DIVABAATIVA$">
+
+            <input type="hidden" name="pa" value="$PROXIMAACAO$">
+        </form>
+
+        <script>
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            tabcontents = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    tabcontents[i].style.display = "none";
+            }
+            document.getElementById("$ABAATIVA$").className += " active";
+            document.getElementById("$DIVABAATIVA$").style.display = "block";
+        </script>
+    </body>
+</html>

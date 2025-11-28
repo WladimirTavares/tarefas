@@ -1,0 +1,76 @@
+-- instalar apache 
+
+sudo apt install apache2
+
+--Instalar gcc (build-essential)
+
+sudo apt build-essential
+
+
+--Habilitar cgid no apache
+
+sudo a2enmod cgid
+
+
+--Instalar sqlite3 e interface do sqlite3 para C
+
+apt update
+apt install sqlite3
+apt-get install libsqlite3-dev
+
+
+-- Instalar ImageMagick
+
+Alterar cofiguração para permitir a conversão de pdf
+(Estou usando a versão 6, não sei se funciona com a versão mais recente.)
+
+	* no arquivo /etc/ImageMagick-6/policy.xml
+	* comentar a linha
+
+	<policy domain="coder" rights="none" pattern="PDF" />
+
+
+-- criar diretório onde o sistema ficará (veja o script inst.sh)
+
+mkdir /var/persist
+mkdir /var/persist/tarefas
+mkdir /var/persist/tarefas/html
+mkdir /var/persist/tarefas/dados
+mkdir /var/persist/tarefas/downloads
+
+-- colocar o banco de dados no diretório de dados dos sistema (/var/persist/tarefas/dados)
+
+-- habilitar acesso ao diretório de dados das tarefas, onde, por hora, estará o arquivos de enunciado
+	* no arquivo /etc/apache2/conf-available/serve-cgi-bin.conf (dentro do IdDefine do tópico acima)
+
+
+		# Configuração do tarefas no apache
+		<IfDefine ENABLE_USR_LIB_CGI_BIN>
+
+				# habilita o diretõrio do sistema para execução de scripts cgi
+				<Directory "/var/persist/tarefas2">
+						AllowOverride None
+						Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+						Require all granted
+				</Directory>
+
+				# cria alias "tarefas2" (127.0.0.1/tarefas2/) para o diretório do sistema
+				ScriptAlias /tarefas2/ /var/persist/tarefas2/
+
+				# cria alias para o diretõrio de downloads das tarefas
+				Alias "/tarefasdwl" "/var/persist/tarefas2/downloads"
+
+				# bloqueia acesso aos diretórios de dados
+				<Directory "/var/persist/tarefas2/dados">
+						AllowOverride None
+						Require all denied
+				</Directory>
+		</IfDefine>
+
+	* https://httpd.apache.org/docs/2.4/mod/mod_alias.html#alias
+
+
+-- alterar o arquivo lugar.h a fim de definir o endereço do site nas variáveis globais necessárias
+	(trocar 127.0.0.1 pelo endereço do site)
+
+-- rodar o ./makeprod.sh

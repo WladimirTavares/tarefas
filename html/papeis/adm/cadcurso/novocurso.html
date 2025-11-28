@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			div.formSalvar {
+
+				text-align: left;
+				width: 43em;
+			}
+
+			form.salvar {
+
+
+			}
+
+			table.camposSalvar {
+
+				width: 100%;
+				table-layout: fixed;
+				border-collapse: collapse;
+			}
+
+			td.nomeCampoSalvar {
+				text-align: right;
+				width: 8em;
+			}
+
+			td.campoSalvar {
+				text-align: left;
+				width: 27em;
+			}
+
+			td.espacoDir {
+				text-align: left;
+				width: 8em;
+			}
+
+			td.espacoVertical {
+				padding-bottom: .5em;
+			}
+
+			input.campoSalvar[type="text"] {
+
+				width: 90%;
+				font-family: default;
+				font-family: Arial, sans-serif;
+				font-size: 13.333px;
+			}
+
+			textarea.campoSalvar {
+
+				width: 90%;
+				resize: none;
+				font-family: Arial, sans-serif;
+				font-size: 13.333px;
+			}
+
+			div.cabecalho {
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de ADM: Novo Curso</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div class="formSalvar">
+		<p>Dados do Curso</p>
+			<form method="post">
+					<table class="camposSalvar">
+						<tr>
+							<td class="nomeCampoSalvar">Código:</td> <td class="campoSalvar"><input type="text" class="campoSalvar" maxlength="100" name="codigo" value="$CODIGO$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Nome:</td> <td class="campoSalvar"><input type="text" class="campoSalvar" maxlength="100" name="nome" value="$NOME$"></td> <td class="espacoDir"></td>
+						</tr>
+						<!-- <tr>
+							<td class="nomeCampoSalvar">Instituição:</td> <td class="campoSalvar"><input type="text" class="campoSalvar" maxlength="100" name="idInstituicao"></td> <td class="espacoDir"></td>
+						</tr> -->
+						<tr>
+							<td class="nomeCampoSalvar">Instituição:</td> <td class="campoSalvar"><select name="idInst">@OpcoesInst</select></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Observações:</td> <td class="campoSalvar"><textarea class="campoSalvar" maxlength="200" rows="3" name="obs">$OBS$</textarea></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="espacoVertical"> </td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar"></td> <td class="campoSalvar"><button type="submit" name="acao" formaction="" value="salvarcurso">salvar</button></td> <td class="espacoDir"></td>
+						</tr>
+					</table>
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+			</form>
+		</div>
+
+		<hr>
+
+		<div>
+			<form method="post"><button type="submit" name="acao" formaction="" value="voltarnovocurso">voltar</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+		</div>
+
+	</body>
+
+</html>

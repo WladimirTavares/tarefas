@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			div.formBusca {
+
+				text-align: left;
+				//margin: auto;
+				width: 43em;
+			}
+
+			table.camposBusca {
+
+				width: 100%;
+				table-layout: fixed;
+				border-collapse: collapse;
+			}
+
+			td.nomeCampoBusca {
+				text-align: right;
+				width: 8em;
+			}
+
+			td.campoBusca {
+				text-align: left;
+				width: 27em;
+			}
+
+			td.espacoDir {
+				text-align: left;
+				width: 8em;
+			}
+
+			td.espacoVertical {
+				padding-bottom: .5em;
+			}
+
+			input.campoBusca[type="text"] {
+
+				width: 90%;
+			}
+
+			div.cabecalho {
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de ADM: Cadastro de Curso</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div class="novo">
+			<form method="post"><button type="submit" name="acao" formaction="" value="novocurso">Cadastrar novo Curso</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+		</div>
+
+		<hr>
+
+		<div class="formBusca">
+		<p>Pesquisar Cursos</p>
+
+			<form method="post">
+					<table class="camposBusca">
+						<tr>
+							<td class="nomeCampoBusca">Código:</td> <td class="campoBusca"><input type="text" class="campoBusca" maxlength="100" name="codigo" value="$CODIGO$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">Nome:</td> <td class="campoBusca"><input type="text" class="campoBusca" maxlength="100" name="nome" value="$NOME$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">Instituição:</td> <td class="campoBusca"><select name="idInst">@OpcoesInst</select></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca">Observações:</td> <td class="campoBusca"><input type="text" class="campoBusca" maxlength="100" name="obs" value="$OBS$"></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="espacoVertical"> </td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca"></td> <td class="campoBusca"><button type="submit" name="acao" formaction="" value="buscarcurso">buscar</button></td> <td class="espacoDir"></td>
+						</tr>
+					</table>
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+			</form>
+		</div>
+
+		<hr>
+
+		<div class="resultadoBusca">
+
+			<!-- @resultadoBusca -->
+		</div>
+
+		<!-- @antesDivVoltar -->
+		<div>
+			<form method="post"><button type="submit" name="acao" formaction="" value="voltarcadcurso">voltar</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+		</div>
+
+	</body>
+
+</html>

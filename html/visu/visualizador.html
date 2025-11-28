@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Visualizador</title>
+    </head>
+    <body>
+
+        <div>
+            <!-- @visualizador -->
+<div>
+    <button onclick="zoomIn(document.getElementById('visuImg'));">Zoom in</button> <button onclick="zoomOut(document.getElementById('visuImg'));">Zoom out</button>
+</div>
+<br>
+<img id="visuImg" src="http://127.0.0.1/cgi-bin/dwldr/dwl.cgi" />
+<script>
+    var visuImg = document.getElementById("visuImg");
+    var ratio = visuImg.naturalHeight / visuImg.naturalWidth;
+    visuImg.width = 800;
+    visuImg.height = visuImg.width * ratio;
+
+
+    function zoomIn(imgEl) {
+      imgEl.width = 1.1 * imgEl.width;
+      imgEl.height = imgEl.width * ratio;
+    }
+
+    function zoomOut(imgEl) {
+      imgEl.width = 0.909090909 * imgEl.width;
+      imgEl.height = imgEl.width * ratio;
+    }
+</script>        </div>
+
+    </body>
+</html>

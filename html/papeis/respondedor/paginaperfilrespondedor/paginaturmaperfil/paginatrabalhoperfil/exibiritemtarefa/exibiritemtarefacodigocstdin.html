@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+            div.editor {
+                width: 100%;
+            }
+        </style>
+
+		</style>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página do Perfil: Minhas Turmas: Turma $TURMA$</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div class="enunciado">
+
+			<img src="$ENUNCIADOTAREFA$" height="$ALTURAENUN$"/>
+
+		</div>
+
+		<div class="dicas">
+			<!--@dicas-->
+
+		</div>
+
+
+		<hr>
+
+		<div>
+			<button id="btdfonte">A-</button>&nbsp;<button id="btafonte">A+</button>
+		</div>
+		<br>
+		<div id="editorResposta" class="editor">
+			
+		</div>
+
+		<div>
+
+		</div>
+
+		<div>
+
+			<script>
+				var mEV = null;
+				var mBS = null;
+				var mKM  = null;
+				var mIT = null;
+				var mCPP = null;
+				var mOD = null;
+			</script>
+			<script src="$URLDWLTAREFAS$/editor.bundle.js"></script>
+			<script>
+				let ed1 = new mEV({
+				doc : "$RESPOSTA$",
+				extensions: [mBS,
+								mKM.of({
+									key: 'Tab',
+									preventDefault: true,
+									run: mIT,
+								}),
+							mCPP(),
+							//myTheme
+							mOD
+							],
+				parent: document.getElementById('editorResposta'),
+				});
+
+				function extrairCodigo() {
+					document.getElementById('taResposta').value = ed1.state.doc;
+				}
+
+				var tamfonte = 12;
+            
+				function afonte() {
+					tamfonte += 2;
+
+					var cssclass = document.querySelectorAll('.cm-editor');
+					cssclass.forEach(editor => {
+						editor.style.fontSize = tamfonte + 'px';
+						
+					});
+
+					cssclass = document.querySelectorAll('.cm-content');
+					cssclass.forEach(editor => {
+						editor.style.fontSize = tamfonte + 'px';
+						
+					});
+				}
+				function dfonte() {
+					tamfonte -= 2;
+
+					var cssclass = document.querySelectorAll('.cm-editor');
+					cssclass.forEach(editor => {
+						editor.style.fontSize = tamfonte + 'px';
+						
+					});
+
+					cssclass = document.querySelectorAll('.cm-content');
+					cssclass.forEach(editor => {
+						editor.style.fontSize = tamfonte + 'px';
+						
+					});
+				}
+
+				document.getElementById('btafonte').onclick = afonte;
+				document.getElementById('btdfonte').onclick = dfonte;
+			</script>
+
+			<form method="post" enctype="multipart/form-data" onsubmit="extrairCodigo();">
+
+				<p>Entrada:</p>
+				<textarea name="taStdin" id="taStdin" style="width: 100%; background-color: black; color: #00ff00"></textarea>
+
+				<p>
+					<!--<button type="submit" name="acao" formaction="./minhasturmas" value="">salvar resposta</button>-->
+					&nbsp;&nbsp;
+					<button type="submit" name="acao" value="executarrespostacodigocstdin">executar!</button> <!-- @btavaliar -->
+					<!--<button type="submit" name="acao" value="avaliarrespostacodigoc">avaliar!</button>-->
+				</p>
+
+				
+
+				<textarea name="taResposta" id="taResposta" hidden></textarea>
+				<!--<input type="hidden" name="tipoTarefa" id="tipoTarefa" value="$TIPOTAREFA$">-->
+				<input type="hidden" name="idItemTarefa" value="$IDITEMTAREFA$">
+				<input type="hidden" name="idTarefa" value="$IDTAREFA$">
+				<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="idPerfilRespondedor" value="$IDPERFILRESPONDEDOR$">
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+
+			</form>
+
+			<hr>
+
+			<div>
+				$RESPOSTAENVIADA$
+			</div>
+
+			$PALAVRASRESERVADAS$
+
+			<hr>
+
+			<div>
+				$GCCRESPOSTAEXIT$
+				<pre>$GCCRESPOSTALOG$</pre>
+			</div>
+			<div>
+				$GCCEXECCTEXIT$
+				<pre>$GCCEXECCTLOG$</pre>
+			</div>
+			<div>
+				$GCCEXECAVALEXIT$
+				<!--<pre>$GCCEXECAVALLOG$</pre>-->
+			</div>
+
+			<hr>
+
+			<div>
+				<p>Saída:</p>
+				<pre style="background-color: black; color: #00FF00;height: 100px">$FEEDBACK$</pre>
+			</div>
+
+			
+
+		</div>
+
+		<hr>
+
+		<div>
+			<form method="post">
+				<button type="submit" name="acao" formaction="" value="voltarpaginaexibiritemtarefa">voltar</button>
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+				<input type="hidden" name="idPerfilRespondedor" value="$IDPERFILRESPONDEDOR$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+			</form>
+		</div>
+
+	</body>
+
+</html>

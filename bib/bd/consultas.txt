@@ -1,0 +1,19 @@
+select Usuario.idUsuario as idUsuario, Adm.idAdm as idAdm, Elaborador.idElaborador as idElaborador, Respondedor.idRespondedor as idRespondedor
+
+from Usuario
+
+left join Adm on Usuario.idUsuario = Adm.idUsuario
+left join Elaborador on Usuario.idUsuario = Elaborador.idUsuario
+left join Respondedor on Usuario.idUsuario = Respondedor.idUsuario;
+
+===========
+
+select Usuario.idUsuario as idUsuario, Adm.idAdm as idAdm, Elaborador.idElaborador as idElaborador, Respondedor.idRespondedor as idRespondedor
+
+from Usuario
+
+left join Adm on Usuario.idUsuario = Adm.idUsuario
+left join Elaborador on Usuario.idUsuario = Elaborador.idUsuario
+left join Respondedor on Usuario.idUsuario = Respondedor.idUsuario
+
+where Usuario.idUsuario = 1;

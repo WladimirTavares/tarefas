@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			div.formSalvar {
+
+				text-align: left;
+				//margin: auto;
+				width: 43em;
+			}
+
+			form.salvar {
+
+
+			}
+
+			table.camposSalvar {
+
+				width: 100%;
+				table-layout: fixed;
+				border-collapse: collapse;
+			}
+
+			td.nomeCampoSalvar {
+				text-align: right;
+				width: 8em;
+			}
+
+			td.campoSalvar {
+				text-align: left;
+				width: 27em;
+			}
+
+			td.espacoDir {
+				text-align: left;
+				width: 8em;
+			}
+
+			td.espacoVertical {
+				padding-bottom: .5em;
+			}
+
+			input.campoSalvar[type="text"] {
+
+				width: 90%;
+				font-family: default;
+				font-family: Arial, sans-serif;
+				font-size: 13.333px;
+			}
+
+			textarea.campoSalvar {
+
+				width: 90%;
+				resize: none;
+				font-family: Arial, sans-serif;
+				font-size: 13.333px;
+			}
+
+			div.cabecalho {
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+		</style>
+		<script>
+			function cbEditarClick() {
+				var cb = document.getElementById("cbEditar");
+
+				//var inNome = document.getElementById("nomeUsuario");
+				//var inEmail = document.getElementById("emailUsuario");
+				//var inLogin = document.getElementById("loginUsuario")
+				var inMatricula = document.getElementById("matriculaPerfil");
+				var cbHabilitado = document.getElementById("habilitadoPerfil");
+				var selInst = document.getElementById("idInstPerfil");
+				var selCurso = document.getElementById("idCursoPerfil");
+				var taObsPerfil = document.getElementById("obsPerfil");
+
+				var btAtualizar = document.getElementById("atualizar");
+
+				if (cb.checked) {
+					//inNome.readOnly = false;
+					//inEmail.readOnly = false;
+					//inLogin.readOnly = false;
+					inMatricula.readOnly = false;
+					cbHabilitado.disabled = false;
+					selInst.disabled = false;
+					selCurso.disabled = false;
+					taObsPerfil.readOnly = false;
+
+					btAtualizar.disabled = false;
+				}
+				else {
+					//inNome.readOnly = true;
+					//inEmail.readOnly = true;
+					//inLogin.readOnly = true;
+					inMatricula.readOnly = true;
+					cbHabilitado.disabled = true;
+					selInst.disabled = true;
+					selCurso.disabled = true;
+					taObsPerfil.readOnly = true;
+
+					btAtualizar.disabled = true;
+				}
+			}
+
+			function selInst(f) {
+
+				var input = document.createElement('input');
+				input.setAttribute('name', "acao");
+				input.setAttribute('value', "selinstituicaoatualizarpr");
+				input.setAttribute('type', "hidden");
+
+				f.appendChild(input);
+
+				f.submit();
+			}
+
+			function btRemoverClick() {
+
+				var selInst = document.getElementById("idInstPerfil");
+				var selCurso = document.getElementById("idCursoPerfil");
+				var cbHabilitado = document.getElementById("habilitadoPerfil");
+
+				cbHabilitado.disabled = false;
+				selInst.disabled = false;
+				selCurso.disabled = false;
+
+			}
+		</script>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de ADM: Visualizar Perfil (<span class="nomeUsuario">$USUARIOLOGIN$</span>)</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div class="formSalvar">
+		<p>Dados do Perfil</p>
+			<form method="post" onsubmit="btRemoverClick();">
+					<table class="camposSalvar">
+						<tr>
+							<td class="nomeCampoSalvar">Nome:</td> <td class="camposSalvar"><input type="text" class="campoSalvar" maxlength="100" name="nome" id="nomeUsuario" value="$NOME$" readonly></td> <td class="espacoDir"><input type="checkbox" name="cbEditar" id="cbEditar" onclick="cbEditarClick()" $EDITAR$><label for="cbEditar">editar</label></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Email:</td> <td class="camposSalvar"><input type="text" class="campoSalvar" maxlength="100" name="email" id="emailUsuario" value="$EMAIL$" readonly></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Login:</td> <td class="camposSalvar"><input type="text" class="campoSalvar" maxlength="100" name="login" id="loginUsuario" value="$LOGIN$" readonly></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Matrícula:</td> <td class="camposSalvar"><input type="text" class="campoSalvar" maxlength="100" name="matricula" id="matriculaPerfil" value="$MATRICULA$" readonly></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Instituição do Curso:</td> <td class="campoSalvar"><select name="idInst" id="idInstPerfil" onchange="selInst(this.form)" disabled>@OpcoesInst</select></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Curso:</td> <td class="campoSalvar"><select name="idCurso" id="idCursoPerfil" disabled>@OpcoesCurso</select></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoBusca"></td> <td class="campoSalvar"><input type="checkbox" name="habilitado" id="habilitadoPerfil" $HABILITADO$><label for="habilitadoPerfil">Habilitado</label></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Observações:</td> <td class="camposSalvar"><textarea class="campoSalvar" maxlength="200" rows="3" name="obs" id="obsPerfil" readonly>$OBS$</textarea></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="espacoVertical"> </td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar"></td> <td class="camposSalvar"><button type="submit" name="acao" id="atualizar" formaction="" value="atualizarpr" disabled>atualizar</button></td> <td class="espacoDir"><button type="submit" name="acao" id="remover" formaction="" value="removerperfil" onclick="return confirm('Tem certeza que quer remover este Perfil?\n Essa ação é irreversível.')">remover</button></td>
+						</tr>
+					</table>
+
+				<!--<input type="hidden" name="idUsuario" value="$IDUSUARIO$">-->
+				<input type="hidden" name="idPerfil" value="$IDPERFIL$">
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+			</form>
+		</div>
+
+		<hr>
+
+		<div>
+			<form method="post"><button type="submit" name="acao" formaction="" value="voltarvisuperfil">voltar</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+		</div>
+
+	</body>
+	<script>
+		cbEditarClick();
+	</script>
+
+</html>

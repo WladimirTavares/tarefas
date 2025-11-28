@@ -1,0 +1,55 @@
+- Guia de construção de páginas de cadastro (busca, novo, visualizar, etc.)
+
+- Página de busca
+
+1. Definir campos da página de busca
+
+2. Definir ações a partir da página de busca
+
+3. Criar modelo html da página de busca
+    - criar botões das ações com os respectivos valores das ações (voltar, buscar, novo, etc.)
+    - implementar a ação "voltar" a partir da página de busca
+
+4. Criar estruturas e métodos de extração, validação e preenchimento dos campos do formulário
+
+5. Criar método da ação de busca e testar a extração, validação e preenchimento dos campos do formulário
+        - caso haja dropdown list, implementar métodos de busca no desses dados no banco e método de preenchimento
+            das opções da dropdown list
+
+6. Criar página de inclusão de novo item
+
+7. Criar método de busca no banco
+
+8. Completar o método da ação de busca com a listagem do resultado da busca
+
+9. implementar páginas "visualizar", etc.
+
+
+
+- Página de novo item
+
+1. Definir campos da página
+
+2. Definir ações
+
+3. Criar modelo html da página de novo item
+    - criar botões das ações
+    - implementar ação voltar a partir da página de novo item
+
+4. Criar método de salvamento no banco
+
+
+
+- Página de visualização
+
+1. Definir campos da página
+
+2. Definir ações
+
+3. Criar modelo html
+    - criar botões das ações
+    - implementar ação voltar a partir da página de novo item
+
+4. Criar método de atualização no banco
+
+

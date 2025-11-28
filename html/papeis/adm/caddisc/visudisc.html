@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			div.formSalvar {
+
+				text-align: left;
+				//margin: auto;
+				width: 43em;
+			}
+
+			form.salvar {
+
+
+			}
+
+			table.camposSalvar {
+
+				width: 100%;
+				table-layout: fixed;
+				border-collapse: collapse;
+			}
+
+			td.nomeCampoSalvar {
+				text-align: right;
+				width: 8em;
+			}
+
+			td.campoSalvar {
+				text-align: left;
+				width: 27em;
+			}
+
+			td.espacoDir {
+				text-align: left;
+				width: 8em;
+			}
+
+			td.espacoVertical {
+				padding-bottom: .5em;
+			}
+
+			input.campoSalvar[type="text"] {
+
+				width: 90%;
+				font-family: default;
+				font-family: Arial, sans-serif;
+				font-size: 13.333px;
+			}
+
+			textarea.campoSalvar {
+
+				width: 90%;
+				resize: none;
+				font-family: Arial, sans-serif;
+				font-size: 13.333px;
+			}
+
+			div.cabecalho {
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+		</style>
+		<script>
+			function cbEditarClick() {
+				var cb = document.getElementById("cbEditar");
+
+				var inCodigo = document.getElementById("codigoDisciplina");
+				var inNome = document.getElementById("nomeDisciplina");
+				var selIdInst = document.getElementById("idInstituicao")
+				var inObs = document.getElementById("obsDisciplina");
+
+				var btAtualizar = document.getElementById("acao");
+
+				if (cb.checked) {
+					inCodigo.readOnly = false;
+					inNome.readOnly = false;
+					selIdInst.disabled = false;
+					inObs.readOnly = false;
+
+					btAtualizar.disabled = false;
+				}
+				else {
+					inCodigo.readOnly = true;
+					inNome.readOnly = true;
+					selIdInst.disabled = true;
+					inObs.readOnly = true;
+
+					btAtualizar.disabled = true;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de ADM: Visualizar Disciplina (<span class="nomeUsuario">$USUARIOLOGIN$</span>)</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div class="formSalvar">
+		<p>Dados da Disciplina</p>
+			<form method="post" onsubmit="document.getElementById('idInstituicao').disabled = false;">
+					<table class="camposSalvar">
+						<tr>
+							<td class="nomeCampoSalvar">Código:</td> <td class="camposSalvar"><input type="text" class="campoSalvar" maxlength="100" name="codigo" id="codigoDisciplina" value="$CODIGO$" readonly></td> <td class="espacoDir"><input type="checkbox" name="cbEditar" id="cbEditar" onclick="cbEditarClick()" $EDITAR$><label for="cbEditar">editar</label></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Nome:</td> <td class="camposSalvar"><input type="text" class="campoSalvar" maxlength="100" name="nome" id="nomeDisciplina" value="$NOME$" readonly></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Instituição:</td> <td class="camposSalvar"><select name="idInst" id="idInstituicao" disabled>@OpcoesInst</select></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar">Observações:</td> <td class="camposSalvar"><textarea class="campoSalvar" maxlength="200" rows="3" name="obs" id="obsDisciplina" readonly>$OBS$</textarea></td> <td class="espacoDir"></td>
+						</tr>
+						<tr>
+							<td class="espacoVertical"> </td>
+						</tr>
+						<tr>
+							<td class="nomeCampoSalvar"></td> <td class="camposSalvar"><button type="submit" name="acao" id="acao" formaction="" value="atualizardisc" disabled>atualizar</button></td> <td class="espacoDir"><button type="submit" name="acao" id="acao" formaction="" value="removerdisc" onclick="return confirm('Tem certeza que quer remover esta Disciplina?\n Essa ação é irreversível.')">remover</button></td>
+						</tr>
+					</table>
+
+				<input type="hidden" name="idDisciplina" value="$IDDISCIPLINA$">
+				<!--<input type="hidden" name="idInst" value="$IDINSTITUICAO$">-->
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+			</form>
+		</div>
+
+		<hr>
+
+		<div>
+			<form method="post"><button type="submit" name="acao" formaction="" value="voltarvisudisc">voltar</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+		</div>
+
+	</body>
+	<script>
+		cbEditarClick();
+	</script>
+
+</html>

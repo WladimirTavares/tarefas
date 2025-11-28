@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+		<style>
+
+			span.nomeUsuario {
+
+				font-family: monospace, sans-serif;
+				font-weight: bold;
+			}
+
+			button.botaoLink[type="submit"] {
+				background: none;
+				border: none;
+				color: blue;
+				text-decoration: underline;
+				cursor: pointer;
+				font-family: serif;
+				font-size: 16px;
+			}
+
+			span.cabecalhoEsq {
+
+				display:inline-block;
+				width:33%;
+			}
+
+			span.cabecalhoCentro {
+
+				display:inline-block;
+				width:33%;
+				text-align: center;
+			}
+
+			span.cabecalhoDir {
+
+				display:inline-block;
+				width:33%;
+				text-align: right;
+			}
+
+			p.padrao {
+
+				margin: 0pt;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="cabecalho">
+			<span class="cabecalhoEsq">
+				<p class="padrao">Página de Professor: Minhas Turmas: Turma $TURMA$</p>
+			</span>
+			<span class="cabecalhoCentro">
+				$MSG$
+			</span>
+			<span class="cabecalhoDir">
+				usuario: <span class="nomeUsuario">$USUARIOLOGIN$</span> | <form method="post" style="display:inline-block"><button type="submit" class="botaoLink" name="acao" formaction="$URLTAREFAS$" value="sair">sair</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+			</span>
+		</div>
+
+		<hr>
+
+		<div>
+
+			<!--<form method="post">-->
+
+				<div class="divProfessores">
+
+					<p>Professor(es)</p>
+
+					<!-- @Professores -->
+
+				</div>
+
+				<div class="divRespondedores">
+
+					<form method="post">
+
+						<button type="submit" class="botaoLink" name="acao" formaction="" value="respondedoresturma">Respondedores</button>
+						<input type="hidden" name="idTurma" value="$IDTURMA$">
+						<input type="hidden" name="ids" value="$IDSESSAO$">
+
+					</form>
+
+
+				</div>
+
+				<div class="divTrabalhos">
+
+					<form method="post">
+
+						<p>Trabalhos</p>
+						<button type="submit" name="acao" formaction="" value="criartrabalho">criar trabalho</button>
+						<button type="submit" name="acao" formaction="" value="duplicartrabalho">duplicar trabalho</button>
+						<br>
+						<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+						<input type="hidden" name="idTurma" value="$IDTURMA$">
+						<input type="hidden" name="ids" value="$IDSESSAO$">
+
+					</form>
+
+					<br>
+
+					<!-- @Trabalhos -->
+
+				</div>
+
+				<!--<input type="hidden" name="idTrabalho" value="$IDTRABALHO$">
+				<input type="hidden" name="idTurma" value="$IDTURMA$">
+				<input type="hidden" name="ids" value="$IDSESSAO$">
+
+			</form>-->
+
+		</div>
+
+		<hr>
+
+		<div>
+			<form method="post"><button type="submit" name="acao" formaction="" value="voltarpaginaturma">voltar</button><input type="hidden" name="ids" value="$IDSESSAO$"></form>
+		</div>
+
+	</body>
+
+</html>

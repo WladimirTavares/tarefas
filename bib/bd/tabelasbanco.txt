@@ -1,0 +1,187 @@
+CREATE TABLE Usuario (
+	idUsuario integer PRIMARY KEY NOT NULL,
+	nome text NOT NULL,
+	login text UNIQUE NOT NULL,
+	senha text NOT NULL,
+	email text NOT NULL,
+	adm integer NOT NULL,
+	professor integer NOT NULL,
+	habilitado integer NOT NULL,
+	
+	CHECK(nome <> '' AND login <> '')
+) STRICT;
+
+CREATE TABLE Curso (
+	idCurso integer PRIMARY KEY NOT NULL,
+	codigo text NOT NULL,
+	nome text NOT NULL,
+	idInstituicao integer NOT NULL REFERENCES Instituicao(idInstituicao) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	obs text,
+	
+	Unique (codigo, idInstituicao),
+	check(codigo <> '' AND nome <> '')
+) STRICT;
+
+
+CREATE TABLE Sessao (
+	idSessao integer PRIMARY KEY NOT NULL,
+	idUsuario integer NOT NULL REFERENCES Usuario (idUsuario) ON DELETE NO ACTION,
+	idPerfilRespondedor integer NOT NULL,
+	segHoraCriacao integer,
+	nsegHoraCriacao integer,
+	segHoraAtualizacao integer,
+	nsegHoraAtualizacao integer,
+	segTempoValidade integer,
+	segTempoValidadeMax integer
+) STRICT;
+	
+
+CREATE TABLE SessaoEncerrada (
+	idSessao integer PRIMARY KEY NOT NULL,
+	idUsuario integer NOT NULL REFERENCES Usuario (idUsuario) ON DELETE NO ACTION,
+	idPerfilRespondedor integer NOT NULL,
+	segHoraCriacao integer,
+	nsegHoraCriacao integer,
+	segHoraAtualizacao integer,
+	nsegHoraAtualizacao integer,
+	segTempoValidade integer,
+	segTempoValidadeMax integer,
+	encerrada integer,
+	segHoraEncerramento integer
+) STRICT;
+
+
+CREATE TABLE SessaoTemp (
+	idSessao integer PRIMARY KEY NOT NULL,
+	idUsuario integer NOT NULL REFERENCES Usuario (idUsuario),
+	idPerfilRespondedor integer NOT NULL,
+	segHoraCriacao integer,
+	nsegHoraCriacao integer,
+	segHoraAtualizacao integer,
+	nsegHoraAtualizacao integer,
+	segTempoValidade integer,
+	segTempoValidadeMax integer,
+	encerrada integer,
+	segHoraEncerramento integer
+) STRICT;
+
+
+CREATE TABLE PerfilRespondedor (
+	idPerfilRespondedor integer PRIMARY KEY NOT NULL,
+	idUsuario integer NOT NULL REFERENCES Usuario(idUsuario) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	matricula text NOT NULL,
+	idCurso integer NOT NULL REFERENCES Curso(idCurso) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	habilitado integer,
+	obs text,
+	
+	UNIQUE (matricula, idCurso),
+	CHECK(matricula <> '')
+) STRICT;
+
+
+CREATE TABLE Disciplina (
+	idDisciplina integer PRIMARY KEY NOT NULL,
+	codigo text NOT NULL,
+	nome text NOT NULL,
+	idInstituicao integer NOT NULL REFERENCES Instituicao (idInstituicao),
+	obs text,
+	
+	UNIQUE (codigo, idInstituicao),
+	CHECK(codigo <> '' AND nome <> '')
+) STRICT;
+
+CREATE TABLE Turma (
+	idTurma integer PRIMARY KEY NOT NULL,
+	idDisciplina integer NOT NULL REFERENCES Disciplina (idDisciplina),
+	idElaboradorProf integer NOT NULL REFERENCES Usuario (idUsuario),
+	codigo text NOT NULL,
+	descricao text,
+	ano text,
+	semestre text,
+	encerrada integer,
+	obs text,
+	
+	UNIQUE (idDisciplina, codigo, ano, semestre),
+	CHECK (codigo <> '')
+) STRICT;
+
+CREATE TABLE Trabalho (
+	idTrabalho integer PRIMARY KEY NOT NULL,
+	idTurma integer NOT NULL REFERENCES Turma (idTurma),
+	codigoTrabalho integer NOT NULL,
+	numTrabalho integer,
+	titulo text NOT NULL,
+	descricao text NOT NULL,
+	segHoraCriacao integer,
+	segHoraInicio integer,
+	segHoraFim integer,
+	oculto integer,
+	ativo integer,
+	obs text
+) STRICT;
+
+CREATE TABLE Turma_Trabalho (
+	idTurma integer NOT NULL REFERENCES Turma (idTurma),
+	idTrabalho integer NOT NULL REFERENCES Trabalho (idTrabalho),
+	
+	segHoraInicio integer,
+	segHoraFim integer,
+	ativo integer,
+	
+	PRIMARY KEY (idTurma, idTrabalho)
+) STRICT;
+
+CREATE TABLE Professor_Turma (
+	idUsuario integer NOT NULL REFERENCES Usuario (idUsuario),
+	idTurma integer NOT NULL REFERENCES Turma (idTurma),
+	
+	PRIMARY KEY (idUsuario, idTurma)
+) STRICT;
+
+CREATE TABLE PerfilRespondedor_Turma (
+	idPerfilRespondedor integer NOT NULL REFERENCES PerfilRespondedor (idPerfilRespondedor),
+	idTurma integer NOT NULL REFERENCES Turma (idTurma),
+	habilitado integer,
+	
+	PRIMARY KEY (idPerfilRespondedor, idTurma)
+) STRICT;
+
+CREATE TABLE Contadores (
+	idUsuario integer,
+	idAdm integer,
+	idElaborador integer,
+	idRespondedor integer,
+	idInstituicao integer,
+	idCurso integer,
+	idDisciplina integer,
+	idTurma integer,
+	idTrabalho integer,
+	idSessao integer,
+	idQuestao integer
+) STRICT;
+
+CREATE TABLE Instituicao (
+	idInstituicao integer PRIMARY KEY NOT NULL,
+	sigla text UNIQUE NOT NULL,
+	nome text UNIQUE NOT NULL,
+	obs text,
+	
+	check(sigla <> '' AND nome <> '')
+) STRICT;
+
+
+CREATE TABLE Questao (
+	idQuestao integer PRIMARY KEY NOT NULL,
+	tipo integer,
+	titulo text NOT NULL,
+	descricao text,
+	obs text
+) STRICT;
+
+
+CREATE TABLE ItemTarefa (
+	idItemTarefa integer PRIMARY KEY NOT NULL,
+	idTarefa integer NOT NULL REFERENCES Tarefa (idTarefa),
+	idTrabalho integer NOT NULL REFERENCES Trabalho (idTrabalho),
+	numItemTarefa integer
+) STRICT;
